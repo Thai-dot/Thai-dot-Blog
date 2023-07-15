@@ -104,9 +104,9 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Link href={page.link}>{page.name}</Link>
-                </MenuItem>
+                <Link key={page.name} href={page.link}>
+                  <MenuItem onClick={handleCloseNavMenu}>{page.name}</MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -151,13 +151,14 @@ function Navbar() {
               }}
             />
             {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "#171A1F", display: "block" }}
-              >
-                <Link href={page.link}>{page.name}</Link>
-              </Button>
+              <Link href={page.link} key={page.name}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "#171A1F", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
             ))}
           </Box>
 

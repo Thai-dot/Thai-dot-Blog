@@ -9,7 +9,6 @@ import classNames from "classnames";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export default function RootLayout({
   children,
 }: {
@@ -28,7 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ThemeProvider theme={theme}>
-        <body className={classNames(inter.className, 'bg-slate-100 relative pt-20')}>
+        <body
+          className={classNames(
+            inter.className,
+            "bg-slate-100 relative",
+            notHaveNavbar.includes(pathname) ? "pt-0" : "pt-20"
+          )}
+        >
           {!notHaveNavbar.includes(pathname) && <Navbar />}
 
           {children}

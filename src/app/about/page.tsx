@@ -16,8 +16,10 @@ export const metadata: Metadata = setMetaData(
 export default function HomePage() {
   const centerLayout = centerLayoutClass;
   return (
-    <section className={`flex justify-center   ${centerLayout}`}>
-      <article className="w-3/5">
+    <section
+      className={`flex flex-col md:flex-row justify-center   ${centerLayout}`}
+    >
+      <article className="w-full md:w-3/5">
         <h1 className="mt-10">Về tôi</h1>
         <p className="text-neutral-600 text-sm md:text-base lg:text-lg w-2/3 mt-12 md:mt-18 lg:mt-20">
           Chào mọi người 🤞 Mình là Nguyễn Hoàng Thái. Mình tốt nghiệp cử nhân
@@ -34,7 +36,7 @@ export default function HomePage() {
           </Link>
         </div>
       </article>
-      <div className="w-2/5  ">
+      <div className="w-full md:w-2/5  ">
         <Image
           src={Avatar}
           className="rounded-full border-2 shadow-2xl"
