@@ -1,24 +1,28 @@
 import React from "react";
-import example from "@/assets/dalat.jpg";
+import example from "@/assets/dogcoin.jpg";
 import Image from "next/image";
 import MainButton from "@/components/Buttons/Button/MainButton";
 
 export default function HomePost() {
   return (
-    <div className="flex flex-col md:flex-row rounded-md border-2 shadow-lg ">
-      <Image
-        src={example}
-        alt="home blog img"
-        className="object-cover w-full md:w-1/2  rounded-s-md"
-      />
+    <div className="flex flex-col md:flex-row  rounded-md border-2 shadow-lg mb-6">
+      <div className="w-full md:w-1/2 bg-slate-200 ">
+        <div className="relative h-[220px] md:h-[416px] lg:h-[392px] xl:h-[320px]">
+          <Image
+            src={example}
+            alt="home blog img"
+            className="absolute top-0 left-0 object-cover h-full w-full rounded-s-md"
+          />
+        </div>
+      </div>
 
-      <article className="w-full md:w-1/2 xs:flex-row p-2 sm:p-4 md:p-8">
+      <article className="w-full bg-white md:w-1/2 xs:flex-row p-2 sm:p-4 md:p-6">
         <div className="text-primary-550 font-medium ">Thể loại</div>
-        <h5 className="my-4">
+        <h5 className="my-6">
           Aliqua Irure Tempor Lorem Occaecat VolupVolupVolup Volup Volup Volup
           Volup Volup Volup Volup
         </h5>
-        <p className="my-4">
+        <p className="my-6 mb-8">
           Ex nisi in in minim dolore ad nostrud cillum. Fugiat veniam
           adipisicing nulla amet...
         </p>

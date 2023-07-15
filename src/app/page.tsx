@@ -1,23 +1,19 @@
 import Image from "next/image";
 import MainButton from "@/components/Buttons/Button/MainButton";
 import HomePost from "@/components/Posts/HomePost/HomePost";
+import Home from "@/app/home";
+import type { Metadata } from "next";
 
-export default function Home() {
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "My Thai-dot blog home",
+};
+
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col  p-24 lg:px-52 md:px-32 px-20  ">
-      <h1 className="mt-2 text-center">Chào mừng đến Thai-dot Blog</h1>
-      <p className="mt-4 mb-4 text-center">Nơi chia sẻ kiến thức của mình</p>
-      <h4 className="lg:text-2xl md:text-xl text-base text-left mb-4">
-        Bài viết mới
-      </h4>
-      <div className="flex flex-col gap-4">
-        <HomePost />
-        <HomePost />
-        <HomePost />
-      </div>
-      <div className="flex justify-center my-7">
-        <MainButton text="Xem thêm bài viết" />
-      </div>
-    </main>
+    <div>
+      <Home />
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import setMetaData from "@/utils/metadata";
 import Logo from "@/components/Logo/Logo";
 import GoogleIcon from "@mui/icons-material/Google";
 import ProviderButton from "@/components/Buttons/ProviderButton/ProviderButton";
@@ -10,7 +9,7 @@ import Link from "next/link";
 import LoginImage from "@/assets/loginImg.svg";
 import Image from "next/image";
 
-export const metadata = setMetaData("Login", "Thai-dot login blog");
+
 export default function page() {
   return (
     <div className="flex flex-wrap w-full min-h-screen">

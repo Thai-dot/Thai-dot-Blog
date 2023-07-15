@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,10 +14,13 @@ import MenuItem from "@mui/material/MenuItem";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import Link from "next/link";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Link from "next/link";
 
-const pages = ["Trang chủ", "Về tôi"];
+const pages = [
+  { name: "Trang chủ", link: "/" },
+  { name: "Về tôi", link: "/about" },
+];
 const settings = ["Tài khoản", "Quản lý post", "Đăng xuất"];
 
 function Navbar() {
@@ -102,8 +104,8 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  {page}
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Link href={page.link}>{page.name}</Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -140,7 +142,7 @@ function Navbar() {
               size="small"
               placeholder="Tìm kiếm blog..."
               InputProps={{
-                sx:{borderRadius: '25px'},
+                sx: { borderRadius: "25px" },
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
@@ -150,11 +152,11 @@ function Navbar() {
             />
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "#171A1F", display: "block" }}
               >
-                {page}
+                <Link href={page.link}>{page.name}</Link>
               </Button>
             ))}
           </Box>
@@ -165,7 +167,7 @@ function Navbar() {
               id="demo-select-small"
               value={language}
               size="small"
-              sx={{ mr: 2, borderRadius: '25px' }}
+              sx={{ mr: 2, borderRadius: "25px" }}
               onChange={handleChangeLanguage}
             >
               <MenuItem value="vietnamese">Tiếng Việt</MenuItem>

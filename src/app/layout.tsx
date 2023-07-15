@@ -1,18 +1,14 @@
 "use client";
 import "./globals.css";
-import type { Metadata } from "next";
-import { Epilogue } from "next/font/google";
+import { Inter } from "next/font/google";
 import Navbar from "@/components/Layout/Navbar";
+import Footer from "@/components/Layout/Footer";
 import { usePathname } from "next/navigation";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import classNames from "classnames";
 
+const inter = Inter({ subsets: ["latin"] });
 
-const inter = Epilogue({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Home",
-  description: "My Thai-dot blog home",
-};
 
 export default function RootLayout({
   children,
@@ -32,10 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ThemeProvider theme={theme}>
-        <body className={inter.className}>
+        <body className={classNames(inter.className, 'bg-slate-100 relative pt-20')}>
           {!notHaveNavbar.includes(pathname) && <Navbar />}
 
           {children}
+          <Footer />
         </body>
       </ThemeProvider>
     </html>
