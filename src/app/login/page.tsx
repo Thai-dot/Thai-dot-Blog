@@ -8,9 +8,27 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Link from "next/link";
 import LoginImage from "@/assets/loginImg.svg";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
+export default function Page() {
+  const [isLoadingGoogle, setIsLoadingGoogle] = React.useState<boolean>(false);
 
-export default function page() {
+  const loginWithGoogle = async () => {
+    setIsLoadingGoogle(true);
+
+    try {
+      await signIn("google").then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Đăng nhập thất bại");
+    } finally {
+      setIsLoadingGoogle(false);
+    }
+  };
+
   return (
     <div className="flex flex-wrap w-full min-h-screen">
       <div className=" bg-slate-200 md:w-1/2 w-full   relative">
@@ -23,6 +41,8 @@ export default function page() {
                 icon={<GoogleIcon sx={{ color: "white" }} />}
                 title="Đăng nhập bằng google"
                 className="mt-10"
+                onClick={() => loginWithGoogle()}
+                isLoading={isLoadingGoogle}
               />
               <ProviderButton
                 icon={<GitHubIcon sx={{ color: "white" }} />}

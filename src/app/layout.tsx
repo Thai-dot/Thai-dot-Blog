@@ -1,11 +1,14 @@
-"use client";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Layout/Navbar";
 import Footer from "@/components/Layout/Footer";
-import { usePathname } from "next/navigation";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+//import { usePathname } from "next/navigation";
+import ThemeProviderComponent from "@/lib/theme-provider";
+
 import classNames from "classnames";
+import { ToastContainer, Flip } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,32 +17,37 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  const theme = createTheme({
-    typography: {
-      fontFamily: "Inter,sans-serif",
-    },
-  });
-
   const notHaveNavbar = ["/login"];
-  console.log(pathname);
+
   return (
     <html lang="en">
-      <ThemeProvider theme={theme}>
-        <body
-          className={classNames(
-            inter.className,
-            "bg-slate-100 relative",
-            notHaveNavbar.includes(pathname) ? "pt-0" : "pt-20"
-          )}
-        >
-          {!notHaveNavbar.includes(pathname) && <Navbar />}
-
+      <body
+        id="body"
+        className={classNames(
+          inter.className,
+          "bg-slate-100 relative",
+          "pt-20"
+        )}
+      >
+        <ThemeProviderComponent>
+          <Navbar />
           {children}
           <Footer />
-        </body>
-      </ThemeProvider>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            theme="light"
+            transition={Flip}
+          />
+        </ThemeProviderComponent>
+      </body>
     </html>
   );
 }

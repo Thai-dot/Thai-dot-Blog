@@ -3,6 +3,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import classNames from "classnames";
+import { CircularProgress } from "@mui/material";
 
 interface MainButtonType {
   fontSize?: string | number | undefined;
@@ -14,6 +15,7 @@ interface MainButtonType {
   color?: string;
   icon?: any;
   borderColor?: string;
+  isLoading?: boolean;
 }
 
 export default function MainButton(props: MainButtonType) {
@@ -27,6 +29,7 @@ export default function MainButton(props: MainButtonType) {
     color,
     icon,
     borderColor,
+    isLoading,
   } = props;
   return (
     <Button
@@ -34,7 +37,7 @@ export default function MainButton(props: MainButtonType) {
       style={{
         borderRadius: borderRadius ?? "5px",
         backgroundColor:
-          variant === "contained" || variant ===undefined
+          variant === "contained" || variant === undefined
             ? backgroundColor ?? "#00bdd6"
             : undefined,
         fontSize: fontSize ?? "13px",
@@ -44,12 +47,14 @@ export default function MainButton(props: MainButtonType) {
           : variant === "outlined" || variant === "text"
           ? "#00bdd6"
           : "white",
-        
       }}
-      className={classNames(className, "shadow-l text-base md:text-lg lg:text-xl")}
+      className={classNames(
+        className,
+        "shadow-l text-base md:text-lg lg:text-xl"
+      )}
       variant={variant ?? "contained"}
     >
-      {text}
+      {isLoading ? <CircularProgress size={20} /> : text}
     </Button>
   );
 }
