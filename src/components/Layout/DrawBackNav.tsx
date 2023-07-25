@@ -21,6 +21,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import MainButton from "../Buttons/Button/MainButton";
+import useIsMounted from "@/hooks/is-mounted/is-mounted";
 
 interface DrawBackNavbarType {
   session: any;
@@ -29,8 +30,7 @@ interface DrawBackNavbarType {
 function DrawBackNavbar(props: DrawBackNavbarType) {
   const { session } = props;
   const pathname = usePathname();
-
-  console.log(session);
+  const mounted = useIsMounted();
 
   const pages = [
     { name: "Trang chủ", link: "/" },
@@ -41,7 +41,7 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
 
   const checkDisplay = notHaveNavbar.includes(pathname);
 
-  if (checkDisplay) {
+  if (checkDisplay && mounted) {
     document.getElementById("body")?.classList.remove("pt-20");
   }
 

@@ -2,9 +2,8 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Layout/Navbar";
 import Footer from "@/components/Layout/Footer";
-//import { usePathname } from "next/navigation";
 import ThemeProviderComponent from "@/lib/theme-provider";
-
+import Providers from "@/components/Providers/Providers";
 import classNames from "classnames";
 import { ToastContainer, Flip } from "react-toastify";
 
@@ -17,8 +16,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const notHaveNavbar = ["/login"];
-
   return (
     <html lang="en">
       <body
@@ -29,24 +26,26 @@ export default function RootLayout({
           "pt-20"
         )}
       >
-        <ThemeProviderComponent>
-          <Navbar />
-          {children}
-          <Footer />
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            theme="light"
-            transition={Flip}
-          />
-        </ThemeProviderComponent>
+        <Providers>
+          <ThemeProviderComponent>
+            <Navbar />
+            {children}
+            <Footer />
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              theme="light"
+              transition={Flip}
+            />
+          </ThemeProviderComponent>
+        </Providers>
       </body>
     </html>
   );

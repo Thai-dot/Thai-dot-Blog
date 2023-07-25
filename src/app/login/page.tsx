@@ -13,19 +13,30 @@ import { toast } from "react-toastify";
 
 export default function Page() {
   const [isLoadingGoogle, setIsLoadingGoogle] = React.useState<boolean>(false);
-
+  const [isLoadingGithub, setIsLoadingGithub] = React.useState<boolean>(false);
   const loginWithGoogle = async () => {
     setIsLoadingGoogle(true);
 
     try {
-      await signIn("google").then((res) => {
-        console.log(res);
-      });
+      await signIn("google").then((res) => {});
     } catch (error) {
       console.error(error);
       toast.error("Đăng nhập thất bại");
     } finally {
       setIsLoadingGoogle(false);
+    }
+  };
+
+  const loginWithGithub = async () => {
+    setIsLoadingGithub(true);
+
+    try {
+      await signIn("github").then((res) => {});
+    } catch (error) {
+      console.error(error);
+      toast.error("Đăng nhập thất bại");
+    } finally {
+      setIsLoadingGithub(false);
     }
   };
 
@@ -48,6 +59,8 @@ export default function Page() {
                 icon={<GitHubIcon sx={{ color: "white" }} />}
                 title="Đăng nhập bằng github"
                 className="mt-10 bg-gray-900"
+                isLoading={isLoadingGithub}
+                onClick={() => loginWithGithub()}
               />
             </div>
           </div>

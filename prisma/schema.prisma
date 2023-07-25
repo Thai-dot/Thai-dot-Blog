@@ -64,15 +64,19 @@ enum PostType {
 }
 
 model Post {
-  id         String   @id @default(cuid())
-  title      String
-  createAt   DateTime @default(now())
-  updateAt   DateTime @updatedAt
-  content    Json?
-  type       PostType @default(TECHNOLOGY)
-  viewNumber Int
-  author     User     @relation(fields: [authorId], references: [id])
-  authorId   String
+  id          String   @id @default(cuid())
+  title       String
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  content     Json?
+  readMinute  Int      @default(2)
+  description String   @default("post description")
+  type        PostType @default(TECHNOLOGY)
+  viewNumber  Int      @default(0)
+  isVerified  Boolean  @default(false)
+  image       String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
 
   @@index([authorId])
 }

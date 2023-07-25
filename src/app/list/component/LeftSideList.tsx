@@ -9,15 +9,31 @@ import SearchIcon from "@mui/icons-material/Search";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import PostTypeEnum from "@/types/enum/PostType";
+import useFilterList from "@/zustand/useFilterList";
 
 export default function LeftSideList() {
-  const blogType = ["Công nghệ", "Phim", "Sách", "Game"];
+  const blogType = [
+    { name: "Công nghệ", value: PostTypeEnum.TECHNOLOGY },
+    { name: "Phim", value: PostTypeEnum.MOVIE },
+    { name: "Sách", value: PostTypeEnum.BOOK },
+    { name: "Game", value: PostTypeEnum.GAMING },
+  ];
+
+  const categories = useFilterList((state) => state.categories);
+  const toggleType = useFilterList((state) => state.toggleCheckEachCategory);
+  const searchTitleValue = useFilterList((state) => state.title);
+  const setSearchTitleValue = useFilterList((state) => state.changePostTitle);
 
   return (
     <aside className=" rounded p-3   shadow-xs ">
       <TextField
         size="small"
-        placeholder="Tìm kiếm tác giả..."
+        placeholder="Tìm kiếm bài viết..."
+        value={searchTitleValue}
+        onChange={(e: any) => {
+          setSearchTitleValue(e.target.value);
+        }}
         InputProps={{
           sx: { borderRadius: "5px", marginRight: "0px" },
           startAdornment: (
@@ -35,19 +51,27 @@ export default function LeftSideList() {
         <div className="pl-3">
           {" "}
           <FormGroup>
-            {blogType.map((type: string) => {
+            {blogType.map((type) => {
               return (
                 <FormControlLabel
-                  key={type}
+                  key={type.value}
                   control={
                     <Checkbox
-                      defaultChecked
+                      name={type.value}
+                      checked={
+                        categories.find(
+                          (category) => category.name === type.value
+                        )?.checked
+                      }
+                      onChange={(e: any) => {
+                        toggleType(type.value);
+                      }}
                       style={{
                         color: "#0095a9",
                       }}
                     />
                   }
-                  label={type}
+                  label={type.name}
                 />
               );
             })}
