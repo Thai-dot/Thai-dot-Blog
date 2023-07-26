@@ -32,10 +32,12 @@ export default function LeftSideList() {
         placeholder="Tìm kiếm bài viết..."
         value={searchTitleValue}
         onChange={(e: any) => {
+
+          if(e.target.value.length > 150) return null;
           setSearchTitleValue(e.target.value);
         }}
         InputProps={{
-          sx: { borderRadius: "5px", marginRight: "0px" },
+          sx: { borderRadius: "25px", marginRight: "0px" },
           startAdornment: (
             <InputAdornment position="start">
               <SearchIcon />

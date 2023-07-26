@@ -5,14 +5,31 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
+import useFilterList from "@/zustand/useFilterList";
+import { notFound } from "next/navigation";
+import Pagination from "@mui/material/Pagination";
+import usePagination from "@/hooks/pagination/pagination";
 
 export default function RightSideList() {
+  const { categories, title } = useFilterList();
+
+  const { page, handleChange } = usePagination();
+
+  const categoryParam = categories
+    .filter((item) => item.checked === true)
+    .map((item) => {
+      return item.name;
+    })
+    .join(",");
+
   const fetchPosts = () => {
     return axios
       .get("/api/post", {
         params: {
           limit: 5,
-          page: 1,
+          page,
+          categories: categoryParam,
+          title,
         },
       })
       .then((res) => res.data)
@@ -27,11 +44,16 @@ export default function RightSideList() {
     fetchPosts
   );
 
- 
+  React.useEffect(() => {
+    refetch();
+  }, [categories, refetch, title, page]);
+
+  if (error) return notFound();
+
   return (
     <section>
       <p className="text-sm md:text-base text-neutral-900 mb-4  ">
-        {`Có tất cả ${data?.totalPost} bài viết`}
+        {`Có tất cả ${data?.totalRow} bài viết`}
       </p>
       <div className="">
         {isLoading ? (
@@ -53,6 +75,15 @@ export default function RightSideList() {
                 />
               );
             })}
+
+            <div className="flex-center">
+              <Pagination
+                color="primary"
+                count={data?.totalPage}
+                page={page}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         )}
       </div>

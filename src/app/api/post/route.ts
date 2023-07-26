@@ -1,21 +1,24 @@
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { NextResponse } from "next/server";
+import ApiResponseType from "@/types/type/ApiResponse";
 
 export const GET = async (req: Request) => {
   const url = new URL(req.url);
 
   try {
-    const { limit, page, title } = z
+    const { limit, page, title, categories } = z
       .object({
         limit: z.string(),
         page: z.string(),
         title: z.string().nullish().optional(),
+        categories: z.string().nullish().optional(),
       })
       .parse({
         title: url.searchParams.get("title"),
         limit: url.searchParams.get("limit"),
         page: url.searchParams.get("page"),
+        categories: url.searchParams.get("categories"),
       });
 
     if (parseInt(limit) > 50) {
@@ -26,8 +29,18 @@ export const GET = async (req: Request) => {
 
     if (title) {
       whereClause = {
+        ...whereClause,
         title: {
           contains: title,
+        },
+      };
+    }
+
+    if (categories) {
+      whereClause = {
+        ...whereClause,
+        type: {
+          in: categories.split(","),
         },
       };
     }
@@ -41,18 +54,49 @@ export const GET = async (req: Request) => {
       include: {
         author: true,
       },
-      where: whereClause,
+      where: {
+        ...whereClause,
+        isVerified: {
+          equals: true,
+        },
+      },
+    });
+
+    const totalRow = await db.post.count({
+      where: {
+        ...whereClause,
+        isVerified: {
+          equals: true,
+        },
+      },
     });
 
     const totalPost = await db.post.count();
 
-    return NextResponse.json({
+    const res: ApiResponseType<typeof posts> & {
+      totalPost: number | string;
+      totalRow: number | string;
+      totalPage: number;
+    } = {
+      status: "success",
       data: posts,
+      code: 200,
+      timestamp: new Date(),
       totalPost,
-      status: 200,
-    });
+      totalRow: totalRow,
+      totalPage: Math.ceil(Number(totalRow) / Number(limit)),
+    };
+
+    return NextResponse.json(res);
   } catch (error) {
     console.log(error);
-    return new Response("Could not fetch posts", { status: 500 });
+
+    const res: ApiResponseType<string> = {
+      status: "error",
+      code: 500,
+      timestamp: new Date(),
+      message: "Could not fetch posts",
+    };
+    return new Response(JSON.stringify(res), { status: 500 });
   }
 };

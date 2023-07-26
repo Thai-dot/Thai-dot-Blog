@@ -13,15 +13,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import MainButton from "../Buttons/Button/MainButton";
 import useIsMounted from "@/hooks/is-mounted/is-mounted";
+import { useRouter } from "next/navigation";
 
 interface DrawBackNavbarType {
   session: any;
@@ -31,6 +29,7 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
   const { session } = props;
   const pathname = usePathname();
   const mounted = useIsMounted();
+  const router = useRouter();
 
   const pages = [
     { name: "Trang chủ", link: "/" },
@@ -41,9 +40,17 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
 
   const checkDisplay = notHaveNavbar.includes(pathname);
 
-  if (checkDisplay && mounted) {
+  if (checkDisplay && mounted ) {
     document.getElementById("body")?.classList.remove("pt-20");
+  }else{
+    document.getElementById("body")?.classList.add("pt-20");
   }
+
+  if (pathname === "/login" && mounted && session) {
+    router.push("/");
+  }
+
+  console.log(pathname);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -165,18 +172,6 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
               alignItems: "center",
             }}
           >
-            <TextField
-              size="small"
-              placeholder="Tìm kiếm blog..."
-              InputProps={{
-                sx: { borderRadius: "25px" },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
             {pages.map((page) => (
               <Link href={page.link} key={page.name}>
                 <Button

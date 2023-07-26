@@ -30,11 +30,7 @@ export default async function HomePage() {
       <main className="flex min-h-screen flex-col  p-24 lg:px-52 md:px-32 px-20  pt-8  ">
         <h1 className="mt-2 text-center">Chào mừng đến Thai-dot Blog</h1>
         <p className="my-10 text-center">Nơi chia sẻ kiến thức của mình</p>
-        <div className="flex justify-center mb-10">
-          <Link href="/list">
-            <MainButton text="Danh sách bài viết" />
-          </Link>
-        </div>
+       
         <h4 className="lg:text-2xl md:text-xl text-base text-left mb-4">
           Bài viết mới
         </h4>

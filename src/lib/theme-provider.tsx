@@ -11,6 +11,18 @@ export default function ThemeProviderComponent({ children }: any) {
     typography: {
       fontFamily: "Inter,sans-serif",
     },
+    palette: {
+      primary: {
+        main: "#00bdd6",
+        light: "#61edff",
+        dark: "#006d7c",
+      },
+      secondary: {
+        main: "#8353e2",
+        light: "#bda3ef",
+        dark: "#4a1ca6",
+      },
+    },
   });
   return (
     <ThemeContext.Provider value="any">

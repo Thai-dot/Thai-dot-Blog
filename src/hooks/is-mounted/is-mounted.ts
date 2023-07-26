@@ -1,12 +1,13 @@
-import React from 'react'
+import React from "react";
 
 export default function useIsMounted() {
- const [mounted,setMounted]  = React.useState<boolean>(false);
+  const [mounted, setMounted] = React.useState<boolean>(false);
 
- React.useEffect(() => {
+  React.useEffect(() => {
+    if (typeof window !== undefined) {
+      setMounted(true);
+    }
+  }, []);
 
-    setMounted(true);
- },[])
-
- return mounted;
+  return mounted;
 }

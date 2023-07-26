@@ -38,3 +38,7 @@
   margin: 0;
   padding: 0;
 }
+
+.MuiPagination-root button {
+  color: rgb(24, 6, 6) !important;
+}
