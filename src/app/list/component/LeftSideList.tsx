@@ -26,7 +26,7 @@ export default function LeftSideList() {
   const setSearchTitleValue = useFilterList((state) => state.changePostTitle);
 
   return (
-    <aside className=" rounded p-3   shadow-xs ">
+    <aside className=" rounded p-3 max-h-96 md:max-h-80   shadow-xs ">
       <TextField
         size="small"
         placeholder="Tìm kiếm bài viết..."

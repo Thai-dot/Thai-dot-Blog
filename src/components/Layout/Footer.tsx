@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import Logo from "../Logo/Logo";
@@ -98,7 +98,7 @@ export default function Footer() {
   ];
   return (
     <footer className="bg-slate-200 pt-10 pb-4 ">
-      <div className="flex flex-col lg:flex-row px-28 gap-20 mb-10 ">
+      <div className="flex flex-col lg:flex-row px-28 gap-10 lg:gap-20 mb-5 lg:mb-10 ">
         <div className="flex-[1_2_0] ">
           <Logo />
         </div>
@@ -107,7 +107,7 @@ export default function Footer() {
           <FooterLink title="Loại vài viết" links={secondFooterLinks} />
           <FooterLink title="Social" links={thirdFooterLinks} />
         </div>
-        <div className="flex flex-col basis-80">
+        <div className="flex flex-col lg:basis-80 basis-40">
           <h5 className="text-primary-500">Liên hệ tôi qua email</h5>
           <p className="  text-xs text-neutral-600 font-medium py-2">
             Gửi cho tôi các câu hỏi bất kỳ liên quan đến lĩnh vực công nghệ hoặc

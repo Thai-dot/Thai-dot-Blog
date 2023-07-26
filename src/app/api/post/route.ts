@@ -7,18 +7,20 @@ export const GET = async (req: Request) => {
   const url = new URL(req.url);
 
   try {
-    const { limit, page, title, categories } = z
+    const { limit, page, title, categories, userId } = z
       .object({
         limit: z.string(),
         page: z.string(),
         title: z.string().nullish().optional(),
         categories: z.string().nullish().optional(),
+        userId: z.string().nullish().optional(),
       })
       .parse({
         title: url.searchParams.get("title"),
         limit: url.searchParams.get("limit"),
         page: url.searchParams.get("page"),
         categories: url.searchParams.get("categories"),
+        userId: url.searchParams.get("userId"),
       });
 
     if (parseInt(limit) > 50) {
@@ -41,6 +43,15 @@ export const GET = async (req: Request) => {
         ...whereClause,
         type: {
           in: categories.split(","),
+        },
+      };
+    }
+
+    if (userId) {
+      whereClause = {
+        ...whereClause,
+        authorId: {
+          equals: userId,
         },
       };
     }
@@ -71,10 +82,7 @@ export const GET = async (req: Request) => {
       },
     });
 
-    const totalPost = await db.post.count();
-
     const res: ApiResponseType<typeof posts> & {
-      totalPost: number | string;
       totalRow: number | string;
       totalPage: number;
     } = {
@@ -82,7 +90,6 @@ export const GET = async (req: Request) => {
       data: posts,
       code: 200,
       timestamp: new Date(),
-      totalPost,
       totalRow: totalRow,
       totalPage: Math.ceil(Number(totalRow) / Number(limit)),
     };

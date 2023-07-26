@@ -53,7 +53,7 @@ export default function RightSideList() {
   return (
     <section>
       <p className="text-sm md:text-base text-neutral-900 mb-4  ">
-        {`Có tất cả ${data?.totalRow} bài viết`}
+        {`Có tất cả ${data?.totalRow ?? 0} bài viết`}
       </p>
       <div className="">
         {isLoading ? (

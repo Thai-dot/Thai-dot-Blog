@@ -28,6 +28,12 @@
   .flex-center {
     @apply flex justify-center items-center;
   }
+  .userLayoutNav {
+    @apply pl-2 pr-3 py-2 font-medium rounded-xl;
+  }
+  .userLayoutNav.active {
+    @apply bg-primary-150 text-primary-700 font-bold;
+  }
 }
 
 *,

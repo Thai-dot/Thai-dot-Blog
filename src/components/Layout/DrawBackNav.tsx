@@ -40,17 +40,15 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
 
   const checkDisplay = notHaveNavbar.includes(pathname);
 
-  if (checkDisplay && mounted ) {
+  if (checkDisplay && mounted) {
     document.getElementById("body")?.classList.remove("pt-20");
-  }else{
+  } else {
     document.getElementById("body")?.classList.add("pt-20");
   }
 
   if (pathname === "/login" && mounted && session) {
     router.push("/");
   }
-
-  console.log(pathname);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -220,12 +218,16 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Tài khoản</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Quản lý post</Typography>
-                  </MenuItem>
+                  <Link href={"/information"}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Tài khoản</Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link href={"/blog-list"}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Quản lý blog</Typography>
+                    </MenuItem>
+                  </Link>
                   <MenuItem
                     onClick={() => {
                       handleCloseUserMenu();
