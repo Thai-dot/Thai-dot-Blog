@@ -1,5 +1,6 @@
 import LeftUserLayout from "@/components/Layout/LeftUserLayout";
 import { centerLayoutClass } from "@/constant/classname/classname";
+import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
 
 export default async function UserLayout({
@@ -7,6 +8,7 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
+ 
   return (
     <main className={centerLayoutClass}>
       <h4 className="text-primary-500">Trang quản lý</h4>

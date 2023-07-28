@@ -107,3 +107,32 @@ export const GET = async (req: Request) => {
     return new Response(JSON.stringify(res), { status: 500 });
   }
 };
+
+export async function DELETE(req: Request) {
+  try {
+    const {deleteArray} = await req.json();
+
+    if (deleteArray?.length > 0) {
+      await db.post.deleteMany({
+        where: {
+          id: {
+            in: deleteArray,
+          },
+        },
+      });
+    } else {
+      throw new Error("Can not find any delete array");
+    }
+
+    return new Response(JSON.stringify("delete successfully"), { status: 200 });
+  } catch (error) {
+    console.log(error);
+    const res: ApiResponseType<string> = {
+      status: "error",
+      code: 500,
+      timestamp: new Date(),
+      message: "failed to delete some posts",
+    };
+    return new Response(JSON.stringify(res), { status: 500 });
+  }
+}
