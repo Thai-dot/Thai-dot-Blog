@@ -223,6 +223,11 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
                       <Typography textAlign="center">Tài khoản</Typography>
                     </MenuItem>
                   </Link>
+                  <Link href={"/create-blog"}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Thêm blog mới</Typography>
+                    </MenuItem>
+                  </Link>
                   <Link href={"/blog-list"}>
                     <MenuItem onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">Quản lý blog</Typography>
@@ -241,7 +246,7 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
                 </Menu>
               </>
             ) : (
-              <div className="text-black">
+              <div className="text-black mt-[3px]">
                 <Link href={"/login"}>
                   <MainButton text=" Đăng nhập" variant="outlined" />
                 </Link>

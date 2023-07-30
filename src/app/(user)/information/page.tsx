@@ -25,8 +25,8 @@ const Page: FC<PageProps> = async ({}) => {
         />
       </div>
 
-      <form className="mb-4">
-        <Stack direction="row" flexWrap="wrap" gap={2}>
+      <form className="mb-4 mt-3">
+        <Stack direction="row" flexWrap="wrap" justifyContent="space-between" gap={2}>
           <TextField
             size="small"
             value={userInformation?.name}

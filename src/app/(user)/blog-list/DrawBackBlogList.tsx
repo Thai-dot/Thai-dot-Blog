@@ -17,8 +17,6 @@ const DrawBackBlogList: FC<DrawBackBlogListProps> = ({ session }) => {
   const { deleteArray, title, categories, limit, page, isDelete, onDelete } =
     useBlogList();
 
-  console.log(page);
-
   const categoryParam = categories
     .filter((item) => item.checked === true)
     .map((item) => {
@@ -35,6 +33,7 @@ const DrawBackBlogList: FC<DrawBackBlogListProps> = ({ session }) => {
           userId: session?.user?.id,
           categories: categoryParam,
           title,
+          showNot: "yes",
         },
       })
       .then((res) => res.data)
@@ -75,7 +74,16 @@ const DrawBackBlogList: FC<DrawBackBlogListProps> = ({ session }) => {
       deleteSelectedArray();
       onDelete(false);
     }
-  }, [categories, refetch, title, limit, page, isDelete, onDelete,deleteSelectedArray]);
+  }, [
+    categories,
+    refetch,
+    title,
+    limit,
+    page,
+    isDelete,
+    onDelete,
+    deleteSelectedArray,
+  ]);
 
   if (error) return notFound();
 
@@ -100,6 +108,7 @@ const DrawBackBlogList: FC<DrawBackBlogListProps> = ({ session }) => {
                 updateAt: moment(item?.updateAt).format("DD/MM/YYYY"),
                 type: item?.type,
                 viewNumber: parseInt(item?.viewNumber),
+                status: item?.isVerified,
               };
             })}
           />

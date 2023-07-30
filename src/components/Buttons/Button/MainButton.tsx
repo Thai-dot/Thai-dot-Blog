@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import classNames from "classnames";
 import { CircularProgress } from "@mui/material";
 
+
+// Warning: MainButton is deprecated
 interface MainButtonType {
   fontSize?: string | number | undefined;
   borderRadius?: string | number | undefined;
@@ -16,6 +18,7 @@ interface MainButtonType {
   icon?: any;
   borderColor?: string;
   isLoading?: boolean;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 export default function MainButton(props: MainButtonType) {
@@ -30,6 +33,7 @@ export default function MainButton(props: MainButtonType) {
     icon,
     borderColor,
     isLoading,
+    type,
   } = props;
   return (
     <Button
@@ -52,6 +56,7 @@ export default function MainButton(props: MainButtonType) {
         className,
         "shadow-l text-base md:text-lg lg:text-xl"
       )}
+      type={type}
       variant={variant ?? "contained"}
     >
       {isLoading ? <CircularProgress size={20} /> : text}

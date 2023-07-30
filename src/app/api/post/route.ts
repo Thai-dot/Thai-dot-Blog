@@ -2,18 +2,21 @@ import { db } from "@/lib/db";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import ApiResponseType from "@/types/type/ApiResponse";
+import { getAuthSession } from "@/lib/auth";
+import { PostValidator } from "@/lib/validator/post";
 
 export const GET = async (req: Request) => {
   const url = new URL(req.url);
 
   try {
-    const { limit, page, title, categories, userId } = z
+    const { limit, page, title, categories, userId, showNotVerified } = z
       .object({
         limit: z.string(),
         page: z.string(),
         title: z.string().nullish().optional(),
         categories: z.string().nullish().optional(),
         userId: z.string().nullish().optional(),
+        showNotVerified: z.string().nullish().optional(),
       })
       .parse({
         title: url.searchParams.get("title"),
@@ -21,11 +24,14 @@ export const GET = async (req: Request) => {
         page: url.searchParams.get("page"),
         categories: url.searchParams.get("categories"),
         userId: url.searchParams.get("userId"),
+        showNotVerified: url.searchParams.get("showNot"),
       });
 
     if (parseInt(limit) > 50) {
       throw new Error("limit length is too much!");
     }
+
+    const isShowNotVerified = showNotVerified === "yes" ? true : false;
 
     let whereClause = {};
 
@@ -56,6 +62,15 @@ export const GET = async (req: Request) => {
       };
     }
 
+    if (!isShowNotVerified) {
+      whereClause = {
+        ...whereClause,
+        isVerified: {
+          equals: true,
+        },
+      };
+    }
+
     const posts = await db.post.findMany({
       take: Number(limit) ?? null,
       skip: (Number(page) - 1) * Number(limit) ?? 0,
@@ -67,9 +82,6 @@ export const GET = async (req: Request) => {
       },
       where: {
         ...whereClause,
-        isVerified: {
-          equals: true,
-        },
       },
     });
 
@@ -109,8 +121,25 @@ export const GET = async (req: Request) => {
 };
 
 export async function DELETE(req: Request) {
+  const session = await getAuthSession();
   try {
-    const {deleteArray} = await req.json();
+    if (!session?.user) {
+      return new Response("unauthorized", { status: 401 });
+    }
+
+    const { deleteArray } = await req.json();
+
+    const findIdAuthor = await db.post.findMany({
+      where: {
+        id: {
+          in: deleteArray,
+        },
+      },
+    });
+
+    if (!findIdAuthor.every((post) => post.authorId === session.user.id)) {
+      return new Response("can not has rights to delete", { status: 403 });
+    }
 
     if (deleteArray?.length > 0) {
       await db.post.deleteMany({
@@ -134,5 +163,41 @@ export async function DELETE(req: Request) {
       message: "failed to delete some posts",
     };
     return new Response(JSON.stringify(res), { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const session = await getAuthSession();
+    if (!session?.user) {
+      return new Response("unauthorized", { status: 401 });
+    }
+
+    const body = await req.json();
+
+    const { title, content, readMinute, description, image } =
+      PostValidator.parse(body);
+
+    await db.post.create({
+      data: {
+        title: title,
+        description: description!,
+        content: content,
+        readMinute,
+        image,
+        authorId: session?.user?.id,
+      },
+    });
+
+    return new Response("OK");
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(error.message, { status: 400 });
+    }
+
+    return new Response(
+      "Could not post to subreddit at this time. Please try later",
+      { status: 500 }
+    );
   }
 }

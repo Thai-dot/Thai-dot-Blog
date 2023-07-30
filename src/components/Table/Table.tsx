@@ -33,6 +33,7 @@ interface Data {
   updateAt: string;
   type: string;
   viewNumber: number;
+  status?: boolean;
   action: string;
 }
 
@@ -81,6 +82,12 @@ const headCells: readonly HeadCell[] = [
     label: "Ngày cập nhật",
   },
   {
+    id: "status",
+    numeric: false,
+    disablePadding: false,
+    label: "Trạng thái",
+  },
+  {
     id: "action",
     numeric: false,
     disablePadding: false,
@@ -107,7 +114,7 @@ export default function EnhancedTable(props: EnhancedTableProps) {
       rows.unshift({});
     }
   }
-  console.log("row", rows);
+
 
   const [dense, setDense] = React.useState(false);
   const rowsPerPage = limit;
@@ -182,6 +189,7 @@ export default function EnhancedTable(props: EnhancedTableProps) {
 
   const visibleRows = React.useMemo(
     () =>
+      // @ts-ignore
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
@@ -210,13 +218,13 @@ export default function EnhancedTable(props: EnhancedTableProps) {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
+                const isItemSelected = isSelected(row.id.toString());
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, row.id.toString())}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -242,12 +250,26 @@ export default function EnhancedTable(props: EnhancedTableProps) {
                     >
                       {row.id.toString().substring(4, 8)}
                     </TableCell>
-                    <TableCell align="left">{row.title}</TableCell>
+                    <TableCell align="left" style={{ minWidth: "220px" }}>
+                      {row.title}
+                    </TableCell>
 
                     <TableCell align="left">{row.type}</TableCell>
                     <TableCell align="right">{row.viewNumber}</TableCell>
+
                     <TableCell align="left">{row.createAt}</TableCell>
                     <TableCell align="left">{row.updateAt}</TableCell>
+                    <TableCell align="left" style={{ minWidth: "50px" }}>
+                      {row.status ? (
+                        <div className=" bg-green-400 rounded-3xl text-slate-700 text-center font-medium">
+                          Duyệt
+                        </div>
+                      ) : (
+                        <div className=" bg-yellow-500 rounded-3xl text-slate-700 text-center font-medium">
+                          Chưa duyệt
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell align="left">
                       <TableAction />
                     </TableCell>

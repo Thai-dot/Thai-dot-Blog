@@ -18,6 +18,7 @@ interface Data {
   updateAt: string;
   type: string;
   viewNumber: number;
+  status: boolean;
   action: string;
 }
 

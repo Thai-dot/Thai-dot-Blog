@@ -17,7 +17,7 @@ export default function HomePage() {
   const centerLayout = centerLayoutClass;
   return (
     <section
-      className={`flex flex-col md:flex-row justify-center   ${centerLayout}`}
+      className={`flex flex-col md:flex-row justify-center   ${centerLayout}  px-32`}
     >
       <article className="w-full md:w-3/5">
         <h1 className="mt-10">Về tôi</h1>
@@ -36,7 +36,7 @@ export default function HomePage() {
           </Link>
         </div>
       </article>
-      <div className="w-full md:w-2/5  ">
+      <div className="w-full md:w-2/5 mt-8 md:mt-0  ">
         <Image
           src={Avatar}
           className="rounded-full border-2 shadow-2xl"

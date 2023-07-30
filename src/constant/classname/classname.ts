@@ -1,3 +1,3 @@
 
-export const centerLayoutClass = 'p-24 lg:px-52 md:px-32 px-20 pt-8'
+export const centerLayoutClass = "p-24 px-8 lg:px-32 md:px-20 pt-8";
 

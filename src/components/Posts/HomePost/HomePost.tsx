@@ -46,13 +46,13 @@ export default function HomePost({
         <div>
           <div className="text-primary-550 font-medium mb-2">{type}</div>
           <h5>
-            <HideShowText disableOpen text={title} length={80} />{" "}
+            <HideShowText disableOpen text={title} length={128} />{" "}
           </h5>
         </div>
 
         <div>
           <p className=" my-2 lg:my-4 mb-4 lg:mb-6">
-            <HideShowText disableOpen text={description} length={120} />
+            <HideShowText disableOpen text={description} length={128} />
           </p>
 
           <div className="flex justify-between items-center flex-col xs:flex-row mt-6 md:mt-3 ">

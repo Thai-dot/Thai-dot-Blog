@@ -63,19 +63,19 @@ export default function Footer() {
   const secondFooterLinks: LinkType[] = [
     {
       name: "Công nghệ",
-      link: "/",
+      link: "/list",
     },
     {
       name: "Phim ảnh",
-      link: "/",
+      link: "/list",
     },
     {
       name: "Sách",
-      link: "/",
+      link: "/list",
     },
     {
       name: "Game",
-      link: "/",
+      link: "/list",
     },
   ];
 
