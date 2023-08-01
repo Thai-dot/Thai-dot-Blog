@@ -72,6 +72,7 @@ export default function RightSideList() {
                   readMinute={post.readMinute}
                   createAt={post.createAt.toString()}
                   title={post.title}
+                  id={post?.id}
                 />
               );
             })}

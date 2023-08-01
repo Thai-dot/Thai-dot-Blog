@@ -22,15 +22,14 @@ export default async function HomePage() {
     },
   });
 
-
   if (!firstThreePost) return notFound();
 
   return (
     <div>
-      <main className="flex min-h-screen flex-col  p-24 lg:px-52 md:px-32 px-20  pt-8  ">
+      <main className="flex min-h-screen flex-col  p-24 lg:px-52 md:px-32 sm:px-10 px-4  pt-8  ">
         <h1 className="mt-2 text-center">Chào mừng đến Thai-dot Blog</h1>
         <p className="my-10 text-center">Nơi chia sẻ các kiến thức</p>
-       
+
         <h4 className="lg:text-2xl md:text-xl text-base text-left mb-4">
           Bài viết mới
         </h4>
@@ -38,6 +37,7 @@ export default async function HomePage() {
           {firstThreePost.map((post, index: number) => {
             return (
               <HomePost
+                id={post.id}
                 key={index}
                 description={post.description}
                 image={post?.image ?? undefined}

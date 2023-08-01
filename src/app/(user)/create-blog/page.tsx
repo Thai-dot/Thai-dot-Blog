@@ -149,12 +149,13 @@ const Page: FC<PageProps> = ({}) => {
 
   async function onSubmit(data: PostValidatorType) {
     const blocks = await ref.current?.save();
-    let uploadImageString = "";
 
     try {
+      let uploadImageString = "";
       if (imgFile) {
         uploadImageString = await imageUpload(imgFile).then((res: any) => res);
       }
+
       const payload: PostValidatorType = {
         title: data.title,
         content: blocks,

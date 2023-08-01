@@ -11,24 +11,26 @@ interface LogoType {
 export default function Logo(props: LogoType) {
   const { width, height, className } = props;
   return (
-    <Typography
-      variant="h4"
-      noWrap
-      component="a"
-      href="/"
-      sx={{
-        fontFamily: "monospace",
-        fontWeight: 700,
-        letterSpacing: ".3rem",
-        color: "inherit",
-        textDecoration: "none",
-        ml: 2,
-        mt: 4,
-        pt:6
-      }}
-      fontSize="1.5rem"
-    >
-      ThaiBlog
-    </Typography>
+    <Link href={"/"}>
+      <Typography
+        variant="h4"
+        noWrap
+        component="a"
+        href="/"
+        sx={{
+          fontFamily: "monospace",
+          fontWeight: 700,
+          letterSpacing: ".3rem",
+          color: "inherit",
+          textDecoration: "none",
+          ml: 2,
+          mt: 4,
+          pt: 6,
+        }}
+        fontSize="1.5rem"
+      >
+        ThaiBlog
+      </Typography>
+    </Link>
   );
 }

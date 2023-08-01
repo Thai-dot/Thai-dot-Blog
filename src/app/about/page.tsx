@@ -17,7 +17,7 @@ export default function HomePage() {
   const centerLayout = centerLayoutClass;
   return (
     <section
-      className={`flex flex-col md:flex-row justify-center   ${centerLayout}  px-32`}
+      className={`flex flex-col md:flex-row justify-center p-24 lg:px-44 md:px-20 pt-8  `}
     >
       <article className="w-full md:w-3/5">
         <h1 className="mt-10">Về tôi</h1>

@@ -20,6 +20,7 @@ import { signOut } from "next-auth/react";
 import MainButton from "../Buttons/Button/MainButton";
 import useIsMounted from "@/hooks/is-mounted/is-mounted";
 import { useRouter } from "next/navigation";
+import { isMobile } from "react-device-detect";
 
 interface DrawBackNavbarType {
   session: any;
@@ -30,6 +31,11 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
   const pathname = usePathname();
   const mounted = useIsMounted();
   const router = useRouter();
+
+  const languages = [
+    { value: "vietnamese", name: "Tiếng Việt" },
+    { value: "english", name: "English" },
+  ];
 
   const pages = [
     { name: "Trang chủ", link: "/" },
@@ -184,15 +190,25 @@ function DrawBackNavbar(props: DrawBackNavbarType) {
 
           <Box sx={{ flexGrow: 0, display: "flex" }}>
             <Select
+              native={isMobile}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={language}
               size="small"
-              sx={{ mr: 2, borderRadius: "25px" }}
+              sx={{ mr: 2, borderRadius: "25px", minHeight: "10px" }}
               onChange={handleChangeLanguage}
             >
-              <MenuItem value="vietnamese">Tiếng Việt</MenuItem>
-              <MenuItem value="english">English</MenuItem>
+              {languages.map((option) =>
+                isMobile ? (
+                  <option key={option.value} value={option.value}>
+                    {option.name}
+                  </option>
+                ) : (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.name}
+                  </MenuItem>
+                )
+              )}
             </Select>
 
             {session ? (
