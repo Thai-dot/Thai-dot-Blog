@@ -98,10 +98,11 @@ const headCells: readonly HeadCell[] = [
 interface EnhancedTableProps {
   data: Data[];
   totalRow: number;
+  isAdmin: boolean;
 }
 
 export default function EnhancedTable(props: EnhancedTableProps) {
-  const { data: getRows, totalRow } = props;
+  const { data: getRows, totalRow, isAdmin } = props;
   const { page, setPage, limit, setLimit } = useBlogList();
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
@@ -114,7 +115,6 @@ export default function EnhancedTable(props: EnhancedTableProps) {
       rows.unshift({});
     }
   }
-
 
   const [dense, setDense] = React.useState(false);
   const rowsPerPage = limit;
@@ -271,7 +271,11 @@ export default function EnhancedTable(props: EnhancedTableProps) {
                       )}
                     </TableCell>
                     <TableCell align="left">
-                      <TableAction />
+                      <TableAction
+                        id={row.id.toString()}
+                        isAdmin={isAdmin}
+                        status={Boolean(row.status)}
+                      />
                     </TableCell>
                   </TableRow>
                 );

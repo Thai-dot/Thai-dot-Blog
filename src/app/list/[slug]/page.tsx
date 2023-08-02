@@ -59,7 +59,7 @@ const Page: FC<PageSlugProps> = async ({ params }) => {
         </div>
 
         <div className="flex flex-wrap items-center gap-8">
-          <div className="bg-primary-500 px-1 rounded-3xl md:text-sm text-xs font-light shadow-l ">
+          <div className="bg-primary-500 px-1 text-white rounded-3xl md:text-sm text-xs font-light shadow-l ">
             {thisBlog.type}
           </div>
           <div className="flex gap-1 items-center">

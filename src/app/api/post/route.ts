@@ -88,9 +88,7 @@ export const GET = async (req: Request) => {
     const totalRow = await db.post.count({
       where: {
         ...whereClause,
-        isVerified: {
-          equals: true,
-        },
+  
       },
     });
 

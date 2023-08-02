@@ -9,7 +9,15 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+      cacheTime: 0,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const Providers: FC<LayoutProps> = ({ children }) => {
   const theme = createTheme({
